@@ -50,10 +50,10 @@ public class FilmController {
     
      @RequestMapping("/liste/scene/{idfilm}")
     public String listescene(@PathVariable int idfilm,Model model){
-       List<Scene> film=dao.findAll(Scene.class);
+       /*List<Scene> film=dao.findAll(Scene.class);
         for(int i=0;i<film.size();i++){
            System.out.println(film.get(i).getDescriptionscene());
-        }
+        }*/
         Scene scene=new Scene();
         scene.setIdfilm(idfilm);
         model.addAttribute("scene", dao.findAll(Film.class));
