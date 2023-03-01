@@ -55,8 +55,10 @@ public class FilmController {
         }*/
         Scene scene=new Scene();
         scene.setIdfilm(idfilm);
-        model.addAttribute("scene", dao.findAll(Film.class));
-        return "index";
+
+        model.addAttribute("scene", dao.findAll(Scene.class));
+        model.addAttribute("film", dao.findById(Film.class, idfilm));
+        return "Detail";
     }
     @RequestMapping("/insertFilm")
     public String insertFilm(@RequestParam("sary") MultipartFile file, HttpServletRequest request) {
