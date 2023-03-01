@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<% model.Scene scene = (model.Scene) request.getAttribute("scene"); %>
 <!--[if IE 7]>
 <html class="ie ie7 no-js" lang="en-US">
 <![endif]-->
@@ -26,14 +26,14 @@
     <meta name="format-detection" content="telephone-no">
 
     <!-- CSS files -->
-    <link rel="stylesheet" href="../../resources/css/plugins.css">
-    <link rel="stylesheet" href="../../resources/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plugins.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 
 </head>
 <body>
 <!--preloading-->
 <div id="preloader">
-    <img class="logo" src="../../resources/images/logo1.png" alt="" width="119" height="58">
+    <img class="logo" src="${pageContext.request.contextPath}/resources/images/logo1.png" alt="" width="119" height="58">
     <div id="status">
         <span></span>
         <span></span>
@@ -229,7 +229,7 @@
                         <span></span>
                     </div>
                 </div>
-                <a href="index-2.html"><img class="logo" src="../../resources/images/logo1.png" alt="" width="119" height="58"></a>
+                <a href="index-2.html"><img class="logo" src="${pageContext.request.contextPath}/resources/images/logo1.png" alt="" width="119" height="58"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
@@ -389,7 +389,7 @@
     <div class="container">
         <div class="flex-parent-ft">
             <div class="flex-child-ft item1">
-                <a href="index-2.html"><img class="logo" src="../../resources/images/logo1.png" alt=""></a>
+                <a href="index-2.html"><img class="logo" src="${pageContext.request.contextPath}/resources/images/logo1.png" alt=""></a>
                 <p>5th Avenue st, manhattan<br>
                     New York, NY 10001</p>
                 <p>Call us: <a href="#">(+01) 202 342 6789</a></p>
@@ -443,10 +443,10 @@
 </footer>
 <!-- end of footer section-->
 
-<script src="../../resources/js/jquery.js"></script>
-<script src="../../resources/js/plugins.js"></script>
-<script src="../../resources/js/plugins2.js"></script>
-<script src="../../resources/js/custom.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plugins.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plugins2.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
 </body>
 
 <!-- index14:58-->
