@@ -79,12 +79,12 @@ public class FilmController {
         return "redirect:/liste/film";
     }
     
-     @RequestMapping("/insertScene")
-    public String insertScene(HttpServletRequest request) {
+     @RequestMapping("/insertScene/{idfilm}")
+    public String insertScene(@PathVariable int idfilm,HttpServletRequest request) {
         Scene scene=new Scene();
         try {
             scene.setIdauteur(Integer.parseInt(request.getParameter("auteur")));
-            scene.setIdfilm(Integer.parseInt(request.getParameter("idfilm")));
+            scene.setIdfilm(idfilm);
             scene.setIdplateau(Integer.parseInt(request.getParameter("idplateau")));
             scene.setDescriptionscene(request.getParameter("description"));
             dao.create(scene);
