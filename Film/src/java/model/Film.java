@@ -33,7 +33,15 @@ public class Film {
     @Column 
     private String sary;
     @Column
-    private String description;
+    private String descriptionfilm;
+
+    public String getDescriptionfilm() {
+        return descriptionfilm;
+    }
+
+    public void setDescriptionfilm(String descriptionfilm) {
+        this.descriptionfilm = descriptionfilm;
+    }
 
     public String getTitre() {
         return titre;
@@ -49,13 +57,5 @@ public class Film {
 
     public void setSary(String sary) {
         this.sary = sary;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

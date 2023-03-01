@@ -15,7 +15,7 @@ import javax.persistence.Id;
  * @author USER
  */
 @Entity
-public class Action {
+public class ActionScene {
      @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -27,18 +27,17 @@ public class Action {
     public void setId(Integer id) {
         this.id = id;
     }
-    private String nom;
+    private String descriptionaction;
+
+    public String getDescriptionaction() {
+        return descriptionaction;
+    }
+
+    public void setDescriptionaction(String descriptionaction) {
+        this.descriptionaction = descriptionaction;
+    }
     private Integer idplateau;
     private Integer idscene;
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
     public Integer getIdplateau() {
         return idplateau;
     }

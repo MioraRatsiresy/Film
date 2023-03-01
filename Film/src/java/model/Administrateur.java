@@ -15,7 +15,7 @@ import javax.persistence.Id;
  * @author USER
  */
 @Entity
-public class Admin {
+public class Administrateur {
      @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

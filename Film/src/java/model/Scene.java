@@ -28,7 +28,15 @@ public class Scene {
         this.id = id;
     }
     private Integer idauteur;
-    private String description;
+    private String descriptionscene;
+
+    public String getDescriptionscene() {
+        return descriptionscene;
+    }
+
+    public void setDescriptionscene(String descriptionscene) {
+        this.descriptionscene = descriptionscene;
+    }
     private Integer idfilm;
 
     public Integer getIdauteur() {
@@ -38,15 +46,6 @@ public class Scene {
     public void setIdauteur(Integer idauteur) {
         this.idauteur = idauteur;
     }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Integer getIdfilm() {
         return idfilm;
     }
