@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import model.Film;
 import model.Plateau;
 import model.Scene;
+import model.SceneView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,7 +65,7 @@ public class FilmController {
         for(int i=0;i<film.size();i++){
            System.out.println(film.get(i).getDescriptionscene());
         }*/
-        Scene scene = new Scene();
+        SceneView scene = new SceneView();
         scene.setIdfilm(idfilm);
         int npp = 4;
         int numpage = 1;
@@ -112,4 +113,46 @@ public class FilmController {
         }
         return "scene";
     }
+
+    @RequestMapping("/rechercheavancefilm")
+    public String recherchefilm(Model model, HttpServletRequest request) {
+        String search = request.getParameter("search").toLowerCase();
+        
+        int npp = 4;
+        int numpage = 1;
+        if (request.getParameter("numpage") != null) {
+            numpage = Integer.parseInt(request.getParameter("numpage"));
+        }
+        int indiceprime = numpage * npp - npp;
+        
+        List<Film> zety=dao.paginateWhereFilm(search, indiceprime, npp);
+        for(int i=0;i<zety.size();i++){
+           System.out.println(zety.get(i).getDescriptionfilm());
+        }
+        model.addAttribute("result", dao.paginateWhereFilm(search, indiceprime, npp));
+        model.addAttribute("recherche", search);
+        model.addAttribute("numpage", numpage);
+        return "index";
+    }
+    @RequestMapping("/rechercheavancescene")
+    public String recherchescene(Model model, HttpServletRequest request) {
+        String search = request.getParameter("search").toLowerCase();
+        
+        int npp = 4;
+        int numpage = 1;
+        if (request.getParameter("numpage") != null) {
+            numpage = Integer.parseInt(request.getParameter("numpage"));
+        }
+        int indiceprime = numpage * npp - npp;
+        
+        List<SceneView> zety=dao.paginateWhereScene(search, indiceprime, npp);
+        for(int i=0;i<zety.size();i++){
+           System.out.println(zety.get(i).getDescriptionscene());
+        }
+        model.addAttribute("result", dao.paginateWhereScene(search, indiceprime, npp));
+        model.addAttribute("recherche", search);
+        model.addAttribute("numpage", numpage);
+        return "index";
+    }
+
 }

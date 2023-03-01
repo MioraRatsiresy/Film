@@ -9,13 +9,18 @@ import org.hibernate.criterion.Order;
 
 import java.io.Serializable;
 import java.util.List;
+import model.Film;
+import model.Scene;
+import model.SceneView;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 
 //Hibernate 3.0
 public class HibernateDao {
 
     private SessionFactory sessionFactory;
 
-    public <T> T create(T entity){
+    public <T> T create(T entity) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.saveOrUpdate(entity);
@@ -24,21 +29,42 @@ public class HibernateDao {
         return entity;
     }
 
-    public <T> T findById(Class<T> clazz,Serializable id){
+    public <T> T findById(Class<T> clazz, Serializable id) {
         Session session = sessionFactory.openSession();
         T entity = (T) session.get(clazz, id);
         session.close();
         return entity;
     }
 
-    public <T> List<T> findAll(Class<T> tClass){
+    public List<Film> paginateWhereFilm(String critere, int offset, int size) {
+        Session session = sessionFactory.openSession();
+        critere = "%" + critere + "%";
+        List<Film> results = session.createCriteria(Film.class)
+                .add(Restrictions.or(Restrictions.ilike("titre", critere, MatchMode.ANYWHERE), Restrictions.ilike("descriptionfilm", critere, MatchMode.ANYWHERE)))
+                .setFirstResult(offset)
+                .setMaxResults(offset + size).list();
+        session.close();
+        return results;
+    }
+    public List<SceneView> paginateWhereScene(String critere, int offset, int size) {
+        Session session = sessionFactory.openSession();
+        critere = "%" + critere + "%";
+        List<SceneView> results = session.createCriteria(SceneView.class)
+                .add(Restrictions.or(Restrictions.ilike("descriptionscene", critere, MatchMode.ANYWHERE), Restrictions.ilike("nom", critere, MatchMode.ANYWHERE), Restrictions.ilike("prenom", critere, MatchMode.ANYWHERE), Restrictions.ilike("plateau", critere, MatchMode.ANYWHERE)))
+                .setFirstResult(offset)
+                .setMaxResults(offset + size).list();
+        session.close();
+        return results;
+    }
+
+    public <T> List<T> findAll(Class<T> tClass) {
         Session session = sessionFactory.openSession();
         List<T> results = session.createCriteria(tClass).list();
         session.close();
         return results;
     }
 
-    public <T> List<T> findWhere(T entity){
+    public <T> List<T> findWhere(T entity) {
         Session session = sessionFactory.openSession();
         Example example = Example.create(entity).ignoreCase();
         List<T> results = session.createCriteria(entity.getClass()).add(example).list();
@@ -46,42 +72,42 @@ public class HibernateDao {
         return results;
     }
 
-    public <T> List<T> paginateWhere (T entity, int offset, int size){
+    public <T> List<T> paginateWhere(T entity, int offset, int size) {
         Session session = sessionFactory.openSession();
         Example example = Example.create(entity).ignoreCase();
         List<T> results = session.createCriteria(entity.getClass())
                 .add(example)
                 .setFirstResult(offset)
-                .setMaxResults(offset+size).list();
+                .setMaxResults(offset + size).list();
         session.close();
         return results;
     }
 
-    public <T> List<T> paginate(Class<T> clazz, int offset, int size){
+    public <T> List<T> paginate(Class<T> clazz, int offset, int size) {
         Session session = sessionFactory.openSession();
         List<T> results = session.createCriteria(clazz)
-                            .setFirstResult(offset)
-                            .setMaxResults(offset+size).list();
+                .setFirstResult(offset)
+                .setMaxResults(offset + size).list();
         session.close();
         return results;
     }
 
-    public <T> List<T> paginate(Class<T> clazz, int offset, int size, String orderBy, boolean orderAsc){
+    public <T> List<T> paginate(Class<T> clazz, int offset, int size, String orderBy, boolean orderAsc) {
         Session session = sessionFactory.openSession();
         Order order = (orderAsc) ? Order.asc(orderBy) : Order.desc(orderBy);
         List<T> results = session.createCriteria(clazz)
                 .addOrder(order)
                 .setFirstResult(offset)
-                .setMaxResults(offset+size) .list();
+                .setMaxResults(offset + size).list();
         session.close();
         return results;
     }
 
-    public void deleteById(Class tClass, Serializable id){
+    public void deleteById(Class tClass, Serializable id) {
         delete(findById(tClass, id));
     }
 
-    public void delete(Object entity){
+    public void delete(Object entity) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.delete(entity);
@@ -89,7 +115,7 @@ public class HibernateDao {
         session.close();
     }
 
-    public <T> T update(T entity){
+    public <T> T update(T entity) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.saveOrUpdate(entity);
@@ -97,7 +123,6 @@ public class HibernateDao {
         session.close();
         return entity;
     }
-
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;
