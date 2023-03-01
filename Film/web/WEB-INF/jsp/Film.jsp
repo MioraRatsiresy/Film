@@ -1,11 +1,13 @@
-<!DOCTYPE html>
+<%@ page import="model.Film" %>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!--[if IE 7]>
 <html class="ie ie7 no-js" lang="en-US">
 <![endif]-->
 <!--[if IE 8]>
 <html class="ie ie8 no-js" lang="en-US">
 <![endif]-->
-<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<!--[if !(IE 7) | !(IE 8) ]><!-->
 <html lang="en" class="no-js">
 
 <!-- index14:58-->
@@ -19,25 +21,26 @@
     <link rel="profile" href="#">
 
     <!--Google Font-->
-    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600'/>
+<%--    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600'/>--%>
     <!-- Mobile specific meta -->
     <meta name=viewport content="width=device-width, initial-scale=1">
     <meta name="format-detection" content="telephone-no">
 
     <!-- CSS files -->
-    <link rel="stylesheet" href="../../resources/css/plugins.css">
-    <link rel="stylesheet" href="../../resources/css/style.css">
+    <link rel="stylesheet" href="../../${pageContext.request.contextPath}/resources/css/plugins.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 
 </head>
 <body>
 <!--preloading-->
-<div id="preloader">
-    <img class="logo" src="../../resources/images/logo1.png" alt="" width="119" height="58">
+<%--<div id="preloader">
+    <img class="logo" src="../../${pageContext.request.contextPath}/resources/images/logo1.png" alt="" width="119"
+         height="58">
     <div id="status">
         <span></span>
         <span></span>
     </div>
-</div>
+</div>--%>
 <!--end of preloading-->
 <!--login form popup-->
 <div class="login-wrapper" id="login-content">
@@ -194,7 +197,9 @@
                         <span></span>
                     </div>
                 </div>
-                <a href="index-2.html"><img class="logo" src="../../resources/images/logo1.png" alt="" width="119" height="58"></a>
+                <a href="index-2.html"><img class="logo"
+                                            src="../../${pageContext.request.contextPath}/resources/images/logo1.png"
+                                            alt="" width="119" height="58"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
@@ -293,7 +298,7 @@
     </div>
     <br>
     <center>
-    <button class="btn addLink"><a href="#">Ajouter un film</a></button>
+        <button class="btn addLink"><a href="#">Ajouter un film</a></button>
     </center>
 </header>
 <!-- END | Header -->
@@ -302,50 +307,25 @@
     <div class="container">
         <div class="row">
             <div class="slick-multiItemSlider">
+                <% for (Object fObj :
+                        (List) request.getAttribute("film")) {
+                    Film f = (Film) fObj;
+                %>
                 <div class="movie-item">
                     <div class="mv-img">
-                        <a href="#"><img src="../../resources/images/uploads/slider1.jpg" alt="" width="285" height="437"></a>
+                        <a href="#"><img
+                                src="../../${pageContext.request.contextPath}/resources/images/uploads/slider1.jpg"
+                                alt="" width="285" height="437"></a>
                     </div>
                     <div class="title-in">
                         <div class="cate">
-                            <span class="blue"><a href="Detail.html?Detail=">Voir détail</a></span>
+                            <span class="blue"><a href="Detail.html?Detail=<%= f.getId() %>">Voir détail</a></span>
                         </div>
-                        <h6><a>Titre</a></h6>
+                        <h6><a><%= f.getTitre() %></a></h6>
                     </div>
                 </div>
-                <div class="movie-item">
-                    <div class="mv-img">
-                        <a href="#"><img src="../../resources/images/uploads/slider1.jpg" alt="" width="285" height="437"></a>
-                    </div>
-                    <div class="title-in">
-                        <div class="cate">
-                            <span class="blue"><a href="Detail.html?Detail=">Voir détail</a></span>
-                        </div>
-                        <h6><a>Titre</a></h6>
-                    </div>
-                </div>
-                <div class="movie-item">
-                    <div class="mv-img">
-                        <a href="#"><img src="../../resources/images/uploads/slider1.jpg" alt="" width="285" height="437"></a>
-                    </div>
-                    <div class="title-in">
-                        <div class="cate">
-                            <span class="blue"><a href="Detail.html?Detail=">Voir détail</a></span>
-                        </div>
-                        <h6><a>Titre</a></h6>
-                    </div>
-                </div>
-                <div class="movie-item">
-                    <div class="mv-img">
-                        <a href="#"><img src="../../resources/images/uploads/slider1.jpg" alt="" width="285" height="437"></a>
-                    </div>
-                    <div class="title-in">
-                        <div class="cate">
-                            <span class="blue"><a href="Detail.html?Detail=">Voir détail</a></span>
-                        </div>
-                        <h6><a>Titre</a></h6>
-                    </div>
-                </div>
+                <% } %>
+
             </div>
         </div>
     </div>
@@ -355,7 +335,9 @@
     <div class="container">
         <div class="flex-parent-ft">
             <div class="flex-child-ft item1">
-                <a href="index-2.html"><img class="logo" src="../../resources/images/logo1.png" alt=""></a>
+                <a href="index-2.html"><img class="logo"
+                                            src="../../${pageContext.request.contextPath}/resources/images/logo1.png"
+                                            alt=""></a>
                 <p>5th Avenue st, manhattan<br>
                     New York, NY 10001</p>
                 <p>Call us: <a href="#">(+01) 202 342 6789</a></p>
@@ -409,10 +391,10 @@
 </footer>
 <!-- end of footer section-->
 
-<script src="../../resources/js/jquery.js"></script>
-<script src="../../resources/js/plugins.js"></script>
-<script src="../../resources/js/plugins2.js"></script>
-<script src="../../resources/js/custom.js"></script>
+<script src="../../${pageContext.request.contextPath}/resources/js/jquery.js"></script>
+<script src="../../${pageContext.request.contextPath}/resources/js/plugins.js"></script>
+<script src="../../${pageContext.request.contextPath}/resources/js/plugins2.js"></script>
+<script src="../../${pageContext.request.contextPath}/resources/js/custom.js"></script>
 </body>
 
 <!-- index14:58-->
