@@ -92,6 +92,10 @@ create table scene (
 	idauteur int references auteur(id),
 	idplateau int references plateau(id)
 	);
+
+
+CREATE VIEW SceneView as
+SELECT Scene.*,auteur.nom,auteur.prenom,plateau.plateau from scene join auteur on auteur.id=scene.idauteur join plateau on plateau.id=scene.idplateau; 
 	
 create table actionScene(
 	id serial primary key,
