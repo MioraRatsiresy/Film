@@ -7,11 +7,15 @@ package controller;
 
 import dao.HibernateDao;
 import java.io.File;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import model.Film;
+import model.Plateau;
+import model.Scene;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,8 +33,34 @@ public class FilmController {
     public String index(){
         return "index";
     }
+    @RequestMapping("/formulairescene")
+    public String scene(Model model){
+        model.addAttribute("plateau", dao.findAll(Plateau.class));
+        return "scene";
+    }
+    @RequestMapping("/liste/film")
+    public String listefilm(Model model){
+       /* List<Film> film=dao.findAll(Film.class);
+        for(int i=0;i<film.size();i++){
+           System.out.println(film.get(i).getTitre());
+        }*/
+        model.addAttribute("film", dao.findAll(Film.class));
+        return "index";
+    }
+    
+     @RequestMapping("/liste/scene/{idfilm}")
+    public String listescene(@PathVariable int idfilm,Model model){
+       List<Scene> film=dao.findAll(Scene.class);
+        for(int i=0;i<film.size();i++){
+           System.out.println(film.get(i).getDescriptionscene());
+        }
+        Scene scene=new Scene();
+        scene.setIdfilm(idfilm);
+        model.addAttribute("scene", dao.findAll(Film.class));
+        return "index";
+    }
     @RequestMapping("/insertFilm")
-    public String insertFilm(@RequestParam("sary") MultipartFile file, HttpServletRequest request,Model model) {
+    public String insertFilm(@RequestParam("sary") MultipartFile file, HttpServletRequest request) {
         Film film=new Film();
         try {
             String fileName = file.getOriginalFilename();
@@ -46,6 +76,22 @@ public class FilmController {
         } catch (Exception e) {
            e.printStackTrace();
         }
-        return "index";
+        return "redirect:/liste/film";
+    }
+    
+     @RequestMapping("/insertScene")
+    public String insertScene(HttpServletRequest request) {
+        Scene scene=new Scene();
+        try {
+            scene.setIdauteur(Integer.parseInt(request.getParameter("auteur")));
+            scene.setIdfilm(Integer.parseInt(request.getParameter("idfilm")));
+            scene.setIdplateau(Integer.parseInt(request.getParameter("idplateau")));
+            scene.setDescriptionscene(request.getParameter("description"));
+            dao.create(scene);
+            
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
+        return "scene";
     }
 }
