@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!--[if IE 7]>
 <html class="ie ie7 no-js" lang="en-US">
 <![endif]-->
@@ -266,7 +268,7 @@
             </div>
             <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="movie-single-ct main-content">
-                    <h1 class="bd-hd">Titre</h1>
+                    <h1 class="bd-hd"><%= ( (model.Film) (request.getAttribute("film"))).getTitre() %></h1>
                     <div class="movie-tabs">
                         <div class="tabs">
                             <div class="tab-content">
@@ -281,7 +283,7 @@
                                                 <div class="cast-it">
                                                     <div class="cast-left">
                                                         <a>Scene 1</a>
-                                                        <p>Description</p>
+                                                        <p>Rencontre</p>
                                                         <p>03:49:23</p>
                                                     </div>
                                                     <a href="ActionDetail.html">Actions</a>
@@ -289,7 +291,7 @@
                                                 <div class="cast-it">
                                                     <div class="cast-left">
                                                         <a>Scene 3</a>
-                                                        <p>Description</p>
+                                                        <p>A la bibliothèque</p>
                                                         <p>03:49:23</p>
                                                     </div>
                                                     <a href="ActionDetail.html">Actions</a>
@@ -300,7 +302,7 @@
                                                 <div class="cast-it">
                                                     <div class="cast-left">
                                                         <a>Scene 2</a>
-                                                        <p>Description</p>
+                                                        <p>Au marché</p>
                                                         <p>03:49:23</p>
                                                     </div>
                                                     <a href="ActionDetail.html">Actions</a>
@@ -308,7 +310,7 @@
                                                 <div class="cast-it">
                                                     <div class="cast-left">
                                                         <a>Scene 4</a>
-                                                        <p>Description</p>
+                                                        <p>Dans le taxi</p>
                                                         <p>03:49:23</p>
                                                     </div>
                                                     <a href="ActionDetail.html">Actions</a>
@@ -316,7 +318,7 @@
                                                 <div class="cast-it">
                                                     <div class="cast-left">
                                                         <a>Scene 5</a>
-                                                        <p>Description</p>
+                                                        <p>En cours</p>
                                                         <p>03:49:23</p>
                                                     </div>
                                                     <a href="ActionDetail.html">Actions</a>
@@ -327,7 +329,7 @@
                                                 <div class="cast-it">
                                                     <div class="cast-left">
                                                         <a>Scene 7</a>
-                                                        <p>Description</p>
+                                                        <p>Fête forraine</p>
                                                         <p>03:49:23</p>
                                                     </div>
                                                     <a href="ActionDetail.html">Actions</a>
@@ -335,7 +337,7 @@
                                                 <div class="cast-it">
                                                     <div class="cast-left">
                                                         <a>Scene 6</a>
-                                                        <p>Description</p>
+                                                        <p>Église</p>
                                                         <p>03:49:23</p>
                                                     </div>
                                                     <a href="ActionDetail.html">Actions</a>

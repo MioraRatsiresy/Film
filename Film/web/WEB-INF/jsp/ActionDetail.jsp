@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!--[if IE 7]>
 <html class="ie ie7 no-js" lang="en-US">
 <![endif]-->

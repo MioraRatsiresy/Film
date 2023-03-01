@@ -305,6 +305,7 @@
                     <h1 class="bd-hd"><%= ((model.Film) (request.getAttribute("film"))).getTitre() %>
                     </h1>
                     <center>
+                        <button class="btn"><a href="${pageContext.request.contextPath}/planning/<%= ((model.Film) (request.getAttribute("film"))).getId() %>">Voir le planning</a></button>
                         <button class="btn addLink"><a href="#">Ajouter une Scène</a></button>
                     </center>
                     <div class="movie-tabs">
