@@ -36,15 +36,7 @@ public class ActionScene {
     public void setDescriptionaction(String descriptionaction) {
         this.descriptionaction = descriptionaction;
     }
-    private Integer idplateau;
     private Integer idscene;
-    public Integer getIdplateau() {
-        return idplateau;
-    }
-
-    public void setIdplateau(Integer idplateau) {
-        this.idplateau = idplateau;
-    }
 
     public Integer getIdscene() {
         return idscene;

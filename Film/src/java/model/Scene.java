@@ -53,4 +53,13 @@ public class Scene {
     public void setIdfilm(Integer idfilm) {
         this.idfilm = idfilm;
     }
+    private Integer idplateau;
+
+    public Integer getIdplateau() {
+        return idplateau;
+    }
+
+    public void setIdplateau(Integer idplateau) {
+        this.idplateau = idplateau;
+    }
 }

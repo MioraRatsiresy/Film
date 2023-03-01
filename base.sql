@@ -93,14 +93,14 @@ create table scene (
 	id serial primary key,
 	descriptionscene varchar(100),	
 	idfilm int references film(id),
-	idauteur int references auteur(id)
+	idauteur int references auteur(id),
+	idplateau int references plateau(id)
 	);
 	
 create table actionScene(
 	id serial primary key,
 	descriptionaction varchar(100),	
-	idscene int references scene(id),
-	idplateau int references plateau(id)
+	idscene int references scene(id)
 );
 
 create table DetailsAction(
