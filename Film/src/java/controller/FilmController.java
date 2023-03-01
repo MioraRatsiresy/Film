@@ -15,9 +15,7 @@ import model.Scene;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -25,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author USER
  */
 @Controller
+@CrossOrigin
 public class FilmController {
     @Autowired
     HibernateDao dao;
@@ -38,14 +37,14 @@ public class FilmController {
         model.addAttribute("plateau", dao.findAll(Plateau.class));
         return "scene";
     }
-    @RequestMapping("/liste/film")
+    @GetMapping("/liste/film")
     public String listefilm(Model model){
        /* List<Film> film=dao.findAll(Film.class);
         for(int i=0;i<film.size();i++){
            System.out.println(film.get(i).getTitre());
         }*/
         model.addAttribute("film", dao.findAll(Film.class));
-        return "index";
+        return "Film";
     }
     
      @RequestMapping("/liste/scene/{idfilm}")

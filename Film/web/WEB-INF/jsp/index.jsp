@@ -1,4 +1,4 @@
- <h3 align="center">Insérer un contenu</h3>
+ <h3 align="center">InsÃ©rer un contenu</h3>
     <form action="${pageContext.request.contextPath}/insertFilm" method="post" enctype="multipart/form-data">
         <input type="text" placeholder="Titre" class="form-control" name="titre" required>
         <input id="fileupload" type="file" class="form-control" name="sary" required />

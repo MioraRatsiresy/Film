@@ -1,7 +1,3 @@
-CREATE USER film with password 'film';
-
-create database film;
-
 DROP TABLE IF EXISTS Film CASCADE;
 DROP TABLE IF EXISTS Administrateur CASCADE;
 DROP TABLE IF EXISTS auteur CASCADE;
