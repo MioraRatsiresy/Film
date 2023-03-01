@@ -329,7 +329,7 @@
                                                         <a>Scène <%= i %></a>
                                                         <p><%= s.getDescriptionscene() %></p>
                                                     </div>
-                                                    <a href="ActionDetail.html">Actions</a>
+                                                    <a href="${pageContext.request.contextPath}/liste/scene/<%= s.getIdfilm() %>">Actions</a>
                                                 </div>
 
                                                 <% } %>
