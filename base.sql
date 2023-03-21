@@ -122,6 +122,7 @@ create table scene (
 insert into scene values (default,'zety',1,1,1,0);
 insert into scene values (default,'mikaka mitasoa',1,1,1,0);
 insert into scene values (default,'mmmmmm',1,1,1,0);
+insert into scene values (default,'bisous',1,1,2,0);
 
 CREATE VIEW SceneView as
 SELECT Scene.*,auteur.nom,auteur.prenom,plateau.plateau from scene join auteur on auteur.id=scene.idauteur join plateau on plateau.id=scene.idplateau; 
@@ -135,6 +136,7 @@ insert into actionScene values (default,'mmmffmfm',1);
 insert into actionScene values (default,'efeefefef',1);
 insert into actionScene values (default,'kkkk',2);
 insert into actionScene values (default,'maml',3);
+insert into actionScene values (default,'zeze',4);
 
 create table DetailsAction(
 	id serial primary key,
@@ -151,6 +153,7 @@ insert into DetailsAction values (default,1,1,1,1,'00:05:00',1,1,'Coucou');
 insert into DetailsAction values (default,1,1,1,1,'07:00:00',1,1,'Coucou');
 insert into DetailsAction values (default,3,1,1,1,'01:05:00',1,1,'Miaou');
 insert into DetailsAction values (default,5,1,1,1,'04:05:00',1,1,'Miaou');
+insert into DetailsAction values (default,6,1,1,1,'04:05:00',1,1,'eggegggege');
 
 create table Indisponibiliteplateau(
 	idplateau int not null,
@@ -216,6 +219,71 @@ CREATE VIEW SceneTournage as  select scene.*,coalesce(sum(durree),'00:00:00') as
 -- weekend non pris en compte:  EXTRACT(ISODOW FROM (datedebut+countjour)) ok
 
 --8 heure
+
+
+-- create or replace function planning(film int,datedebut date,datefin date)
+-- returns table(
+-- 	dateplanning date,
+-- 	heureplanning time,
+-- 	scene int,
+-- 	durree time,
+-- 	nomscene varchar
+-- )
+-- language plpgsql
+-- as
+-- $$
+--   declare
+-- 	datetemp date;
+-- 	horaire time;
+-- 	timedebut time;
+--  	g record;
+--     begin
+-- 	datetemp:=datedebut;
+-- 	timedebut:='08:00:00';
+-- 	horaire:=(select horaire.horaire from horaire);
+-- 	 for g in (select * from SceneTournage where etatscene=4 and idfilm=film)
+--     loop
+-- 		while EXTRACT(ISODOW FROM (datetemp))=6 or EXTRACT(ISODOW FROM (datetemp))=7 or (select count(*) from Indisponibiliteplateau where dateindisponibilite=datetemp and Indisponibiliteplateau.idplateau=g.idplateau)=1 or (select count(*) from JourFerie where dateferie=datetemp)=1  loop
+-- 			datetemp:=datetemp+1;
+-- 		end loop;
+
+-- 		if g.temps>'00:00:00' then
+-- 			if (horaire-g.temps)>='00:00:00' and (horaire-g.temps)<='08:00:00' then
+-- 				dateplanning:=datetemp;
+-- 				heureplanning:=timedebut;
+-- 				scene:=g.id;
+-- 				horaire:=horaire-g.temps;
+-- 				RAISE NOTICE '%',horaire;
+-- 				durree:=g.temps;
+-- 				nomscene:=g.descriptionscene;
+-- 				timedebut:=timedebut+g.temps;
+-- 					if horaire='00:00:00' then
+-- 						datetemp:=datetemp+1;
+-- 					end if; 
+-- 				return next;
+-- 			else
+-- 				datetemp:=datetemp+1;
+-- 				horaire:=(select horaire.horaire from horaire);
+-- 				timedebut:='08:00:00';
+-- 				dateplanning:=datetemp;
+-- 				heureplanning:=timedebut;
+-- 				scene:=g.id;
+-- 				horaire:=horaire-g.temps;
+-- 				durree:=g.temps;
+-- 				timedebut:=timedebut+g.temps;
+-- 				nomscene:=g.descriptionscene;
+-- 				return next;
+-- 			end if;
+-- 		end if;
+-- 	end loop;
+--     end;	
+-- $$;
+
+-- select * from planning(1,'2023-03-22','2023-03-24');
+
+
+
+
 create or replace function planning(film int,datedebut date,datefin date)
 returns table(
 	dateplanning date,
@@ -275,7 +343,6 @@ $$
 $$;
 
 select * from planning(1,'2023-03-22','2023-03-24');
-
 
 	
 	
