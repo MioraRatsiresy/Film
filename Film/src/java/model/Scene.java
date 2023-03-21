@@ -62,4 +62,11 @@ public class Scene {
     public void setIdplateau(Integer idplateau) {
         this.idplateau = idplateau;
     }
+    private Integer etatscene;
+    public void setEtatscene(Integer etatscene){
+        this.etatscene=etatscene;
+    }
+    public Integer getEtatscene(){
+        return etatscene;
+    }
 }
