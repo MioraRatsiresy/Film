@@ -175,6 +175,14 @@ create table Planning(
 	durree time,
 	nomscene varchar,
 );
+
+create table Suggestion(
+	dateplanning date,
+	heureplanning time,
+	scene int,
+	durree time,
+	nomscene varchar,
+);
 create table Horaire(
 	horaire time
 );
