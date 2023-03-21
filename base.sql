@@ -210,10 +210,23 @@ $$
 			datetemp:=datetemp+1;
 		end loop;
 
-		dateplanning:=datetemp;
-		heureplanning:=g.temp;
-		scene:=g.id;
-
+		if horaire-temps>=0 then
+			dateplanning:=datetemp;
+			heureplanning:=g.temp;
+			scene:=g.id;
+			horaire:=horaire-temps;
+				if horaire=0 then
+					datetemp:=datetemp+1;
+				end if; 
+			return next;
+		else
+			datetemp:=datetemp+1;
+			dateplanning:=datetemp;
+			heureplanning:=g.temp;
+			scene:=g.id;
+			horaire:=horaire-temps;
+			return next;
+		end if;
 	end loop;
     end;	
 $$;
