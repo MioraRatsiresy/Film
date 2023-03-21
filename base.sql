@@ -43,7 +43,10 @@ create table auteur(
 create table auteurfilm(
 	id serial primary key,
 	idfilm int references film(id),
-	idauteur int references auteur(id));
+	idauteur int references auteur(id)
+);
+ALTER TABLE auteurfilm ADD FOREIGN KEY(idfilm) REFERENCES Film(id);
+ALTER TABLE auteurfilm ADD FOREIGN KEY(idauteur) REFERENCES Auteur(id);
 	
 	
 create table vetement(
@@ -86,6 +89,9 @@ create table Personnage(
 	prenom varchar(50),
 	idRole int references rolePersonnage(id)
 	);
+
+ALTER TABLE Personnage ADD FOREIGN KEY(idRole) REFERENCES rolePersonnage(id);
+
 	
 
 	
@@ -94,8 +100,13 @@ create table scene (
 	descriptionscene varchar(100),	
 	idfilm int references film(id),
 	idauteur int references auteur(id),
-	idplateau int references plateau(id)
+	idplateau int references plateau(id),
+	etatscene int default 0  -- 0 crée 4 validé 6 planifie
 	);
+ALTER TABLE scene ADD FOREIGN KEY(idfilm) REFERENCES Film(id);
+ALTER TABLE scene ADD FOREIGN KEY(idauteur) REFERENCES Auteur(id);
+ALTER TABLE scene ADD FOREIGN KEY(idplateau) REFERENCES plateau(id);
+
 
 
 CREATE VIEW SceneView as
@@ -106,6 +117,8 @@ create table actionScene(
 	descriptionaction varchar(100),	
 	idscene int references scene(id)
 );
+ALTER TABLE actionScene ADD FOREIGN KEY(idscene) REFERENCES Scene(id);
+
 
 create table DetailsAction(
 	id serial primary key,
@@ -117,6 +130,26 @@ create table DetailsAction(
 	idpersonnage int references personnage(id),
 	idvetement int references vetement(id),
 	sketch text 	
+);
+
+ALTER TABLE DetailsAction ADD FOREIGN KEY(idaction) REFERENCES actionScene(id);
+ALTER TABLE DetailsAction ADD FOREIGN KEY(idexpression) REFERENCES expression(id);
+ALTER TABLE DetailsAction ADD FOREIGN KEY(idsentiment) REFERENCES sentiment(id);
+ALTER TABLE DetailsAction ADD FOREIGN KEY(idton) REFERENCES Ton(id);
+ALTER TABLE DetailsAction ADD FOREIGN KEY(idpersonnage) REFERENCES Personnage(id);
+
+
+create table Indisponibiliteplateau(
+	idplateau int not null,
+	designation text,
+	dateindisponibilite date
+);
+ALTER TABLE Indisponibiliteplateau ADD FOREIGN KEY(idplateau) REFERENCES plateau(id);
+
+
+create table JourFerie(
+	designation varchar(100),
+	dateferie date
 );
 
 
