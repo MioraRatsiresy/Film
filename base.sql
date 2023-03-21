@@ -121,6 +121,7 @@ create table scene (
 	);
 insert into scene values (default,'zety',1,1,1,0);
 insert into scene values (default,'mikaka mitasoa',1,1,1,0);
+insert into scene values (default,'mmmmmm',1,1,1,0);
 
 CREATE VIEW SceneView as
 SELECT Scene.*,auteur.nom,auteur.prenom,plateau.plateau from scene join auteur on auteur.id=scene.idauteur join plateau on plateau.id=scene.idplateau; 
@@ -132,6 +133,8 @@ create table actionScene(
 );
 insert into actionScene values (default,'mmmffmfm',1);
 insert into actionScene values (default,'efeefefef',1);
+insert into actionScene values (default,'kkkk',2);
+insert into actionScene values (default,'maml',3);
 
 create table DetailsAction(
 	id serial primary key,
@@ -145,6 +148,9 @@ create table DetailsAction(
 	sketch text 	
 );
 insert into DetailsAction values (default,1,1,1,1,'00:05:00',1,1,'Coucou');
+insert into DetailsAction values (default,1,1,1,1,'07:00:00',1,1,'Coucou');
+insert into DetailsAction values (default,3,1,1,1,'01:05:00',1,1,'Miaou');
+insert into DetailsAction values (default,5,1,1,1,'04:05:00',1,1,'Miaou');
 
 create table Indisponibiliteplateau(
 	idplateau int not null,
@@ -165,7 +171,9 @@ insert into JourFerie values ('Lundi de Paques','2023-04-10');
 create table Planning(
 	dateplanning date,
 	heureplanning time,
-	scene int
+	scene int,
+	durree time,
+	nomscene varchar,
 );
 create table Horaire(
 	horaire time
@@ -193,7 +201,8 @@ returns table(
 	dateplanning date,
 	heureplanning time,
 	scene int,
-	durree time
+	durree time,
+	nomscene varchar
 )
 language plpgsql
 as
@@ -212,33 +221,40 @@ $$
 		while EXTRACT(ISODOW FROM (datetemp))=6 or EXTRACT(ISODOW FROM (datetemp))=7 or (select count(*) from Indisponibiliteplateau where dateindisponibilite=datetemp and Indisponibiliteplateau.idplateau=g.idplateau)=1 or (select count(*) from JourFerie where dateferie=datetemp)=1 loop
 			datetemp:=datetemp+1;
 		end loop;
-
-		if (horaire-g.temps)>='00:00:00' then
-			dateplanning:=datetemp;
-			heureplanning:=timedebut;
-			scene:=g.id;
-			horaire:=horaire-g.temps;
-			durree:=g.temps;
-			timedebut:=timedebut+g.temps;
-				if horaire='00:00:00' then
-					datetemp:=datetemp+1;
-				end if; 
-			return next;
-		else
-			datetemp:=datetemp+1;
-			horaire:=(select horaire.horaire from horaire);
-			timedebut:='08:00:00';
-			dateplanning:=datetemp;
-			heureplanning:=timedebut;
-			scene:=g.id;
-			horaire:=horaire-g.temps;
-			durree:=g.temps;
-			timedebut:=timedebut+g.temps;
-			return next;
+		if g.temps>'00:00:00' then
+		RAISE NOTICE 'Voloany: %-%: %',horaire,g.temps,(horaire-g.temps);
+			if (horaire-g.temps)>='00:00:00' and (horaire-g.temps)<='08:00:00' then
+				dateplanning:=datetemp;
+				heureplanning:=timedebut;
+				scene:=g.id;
+				horaire:=horaire-g.temps;
+				RAISE NOTICE '%',horaire;
+				durree:=g.temps;
+				nomscene:=g.descriptionscene;
+				timedebut:=timedebut+g.temps;
+					if horaire='00:00:00' then
+						datetemp:=datetemp+1;
+					end if; 
+				return next;
+			else
+				datetemp:=datetemp+1;
+				horaire:=(select horaire.horaire from horaire);
+				timedebut:='08:00:00';
+				dateplanning:=datetemp;
+				heureplanning:=timedebut;
+				scene:=g.id;
+				horaire:=horaire-g.temps;
+				durree:=g.temps;
+				timedebut:=timedebut+g.temps;
+				nomscene:=g.descriptionscene;
+				return next;
+			end if;
 		end if;
 	end loop;
     end;	
 $$;
+
+select * from planning(1,'2023-03-22','2023-03-24');
 
 
 	
