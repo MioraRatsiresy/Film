@@ -158,9 +158,21 @@ create table Indisponibiliteplateau(
 	dateindisponibilite date
 );
 
+create table Indisponibiliteacteur(
+	idacteur int not null,
+	raison text,
+	dateindisponibilite date
+);
+
 ALTER TABLE Indisponibiliteplateau ADD FOREIGN KEY(idplateau) REFERENCES plateau(id);
 
+ALTER TABLE Indisponibiliteacteur ADD FOREIGN KEY(idacteur) REFERENCES acteur(id);
+
+
 insert into Indisponibiliteplateau values (1,'Tournage','2023-03-22');
+
+
+insert into Indisponibiliteacteur values (1,'Conge','2023-03-23');
 
 create table JourFerie(
 	designation varchar(100),
@@ -226,9 +238,10 @@ $$
 	horaire:=(select horaire.horaire from horaire);
 	 for g in (select * from SceneTournage where etatscene=4 and idfilm=film)
     loop
-		while EXTRACT(ISODOW FROM (datetemp))=6 or EXTRACT(ISODOW FROM (datetemp))=7 or (select count(*) from Indisponibiliteplateau where dateindisponibilite=datetemp and Indisponibiliteplateau.idplateau=g.idplateau)=1 or (select count(*) from JourFerie where dateferie=datetemp)=1 loop
+		while EXTRACT(ISODOW FROM (datetemp))=6 or EXTRACT(ISODOW FROM (datetemp))=7 or (select count(*) from Indisponibiliteplateau where dateindisponibilite=datetemp and Indisponibiliteplateau.idplateau=g.idplateau)=1 or (select count(*) from JourFerie where dateferie=datetemp)=1  loop
 			datetemp:=datetemp+1;
 		end loop;
+
 		if g.temps>'00:00:00' then
 			if (horaire-g.temps)>='00:00:00' and (horaire-g.temps)<='08:00:00' then
 				dateplanning:=datetemp;
