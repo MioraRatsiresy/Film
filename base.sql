@@ -169,7 +169,7 @@ create table Indisponibiliteacteur(
 
 ALTER TABLE Indisponibiliteplateau ADD FOREIGN KEY(idplateau) REFERENCES plateau(id);
 
-ALTER TABLE Indisponibiliteacteur ADD FOREIGN KEY(idacteur) REFERENCES acteur(id);
+ALTER TABLE Indisponibiliteacteur ADD FOREIGN KEY(idacteur) REFERENCES personnage(id);
 
 
 insert into Indisponibiliteplateau values (1,'Tournage','2023-03-22');
