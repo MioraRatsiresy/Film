@@ -192,7 +192,8 @@ create or replace function planning(film int,datedebut date,datefin date)
 returns table(
 	dateplanning date,
 	heureplanning time,
-	scene int
+	scene int,
+	durree time
 )
 language plpgsql
 as
@@ -200,31 +201,39 @@ $$
   declare
 	datetemp date;
 	horaire time;
- 	 g record;
+	timedebut time;
+ 	g record;
     begin
 	datetemp:=datedebut;
-	horaire:=(select horaire from horaire);
-	 for g in (select * from SceneTournage where etatscene=4)
+	timedebut:='08:00:00';
+	horaire:=(select horaire.horaire from horaire);
+	 for g in (select * from SceneTournage where etatscene=4 and idfilm=film)
     loop
 		while EXTRACT(ISODOW FROM (datetemp))=6 or EXTRACT(ISODOW FROM (datetemp))=7 or (select count(*) from Indisponibiliteplateau where dateindisponibilite=datetemp and Indisponibiliteplateau.idplateau=g.idplateau)=1 or (select count(*) from JourFerie where dateferie=datetemp)=1 loop
 			datetemp:=datetemp+1;
 		end loop;
 
-		if horaire-temps>=0 then
+		if (horaire-g.temps)>='00:00:00' then
 			dateplanning:=datetemp;
-			heureplanning:=g.temp;
+			heureplanning:=timedebut;
 			scene:=g.id;
-			horaire:=horaire-temps;
-				if horaire=0 then
+			horaire:=horaire-g.temps;
+			durree:=g.temps;
+			timedebut:=timedebut+g.temps;
+				if horaire='00:00:00' then
 					datetemp:=datetemp+1;
 				end if; 
 			return next;
 		else
 			datetemp:=datetemp+1;
+			horaire:=(select horaire.horaire from horaire);
+			timedebut:='08:00:00';
 			dateplanning:=datetemp;
-			heureplanning:=g.temp;
+			heureplanning:=timedebut;
 			scene:=g.id;
-			horaire:=horaire-temps;
+			horaire:=horaire-g.temps;
+			durree:=g.temps;
+			timedebut:=timedebut+g.temps;
 			return next;
 		end if;
 	end loop;
