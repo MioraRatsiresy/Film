@@ -149,6 +149,8 @@ create table DetailsAction(
 	idvetement int references vetement(id),
 	sketch text 	
 );
+
+SELECT idpersonnage from DetailsAction join actionScene on actionScene.id=detailsaction.idaction join scene on scene.id=actionscene.idscene;
 insert into DetailsAction values (default,1,1,1,1,'00:05:00',1,1,'Coucou');
 insert into DetailsAction values (default,1,1,1,1,'07:00:00',1,1,'Coucou');
 insert into DetailsAction values (default,3,1,1,1,'01:05:00',1,1,'Miaou');
@@ -290,7 +292,8 @@ returns table(
 	heureplanning time,
 	scene int,
 	durree time,
-	nomscene varchar
+	nomscene varchar,
+	plateau int
 )
 language plpgsql
 as
@@ -300,14 +303,22 @@ $$
 	horaire time;
 	timedebut time;
  	g record;
+	f record;
+	k record;
     begin
 	datetemp:=datedebut;
 	timedebut:='08:00:00';
 	horaire:=(select horaire.horaire from horaire);
-	 for g in (select * from SceneTournage where etatscene=4 and idfilm=film)
+	for f in (select idplateau from scenetournage where idfilm=film group by idplateau)
+	loop
+	 for g in (select * from SceneTournage where etatscene=4 and idplateau=f.idplateau)
     loop
 		while EXTRACT(ISODOW FROM (datetemp))=6 or EXTRACT(ISODOW FROM (datetemp))=7 or (select count(*) from Indisponibiliteplateau where dateindisponibilite=datetemp and Indisponibiliteplateau.idplateau=g.idplateau)=1 or (select count(*) from JourFerie where dateferie=datetemp)=1  loop
 			datetemp:=datetemp+1;
+		end loop;
+		
+		for k in (SELECT idpersonnage from DetailsAction join actionScene on actionScene.id=detailsaction.idaction join scene on scene.id=actionscene.idscene where scene.id=g.id group by idpersonnage) loop
+
 		end loop;
 
 		if g.temps>'00:00:00' then
@@ -315,6 +326,7 @@ $$
 				dateplanning:=datetemp;
 				heureplanning:=timedebut;
 				scene:=g.id;
+				plateau:=f.idplateau;
 				horaire:=horaire-g.temps;
 				RAISE NOTICE '%',horaire;
 				durree:=g.temps;
@@ -330,6 +342,7 @@ $$
 				timedebut:='08:00:00';
 				dateplanning:=datetemp;
 				heureplanning:=timedebut;
+				plateau:=f.idplateau;
 				scene:=g.id;
 				horaire:=horaire-g.temps;
 				durree:=g.temps;
@@ -338,6 +351,7 @@ $$
 				return next;
 			end if;
 		end if;
+	end loop;
 	end loop;
     end;	
 $$;
