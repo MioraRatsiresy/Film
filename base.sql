@@ -183,9 +183,9 @@ insert into ton(ton) values ('Lamentable'),(' langoureux'), ('languissant'), ('l
 CREATE VIEW SceneTournage as  select scene.*,coalesce(sum(durree),'00:00:00') as temps from scene left join actionscene on actionscene.idscene=scene.id left join detailsaction on detailsaction.idaction=actionscene.id group by scene.id;
 
 
---indisponibilite plateau
---jour ferie 
--- weekend non pris en compte:  EXTRACT(ISODOW FROM (datedebut+countjour))
+--indisponibilite plateau ok
+--jour ferie ok
+-- weekend non pris en compte:  EXTRACT(ISODOW FROM (datedebut+countjour)) ok
 
 --8 heure
 create or replace function planning(film int,datedebut date,datefin date)
@@ -198,11 +198,23 @@ language plpgsql
 as
 $$
   declare
-  g record;
+	datetemp date;
+	horaire time;
+ 	 g record;
     begin
+	datetemp:=datedebut;
+	horaire:=(select horaire from horaire);
 	 for g in (select * from SceneTournage where etatscene=4)
     loop
+		while EXTRACT(ISODOW FROM (datetemp))=6 or EXTRACT(ISODOW FROM (datetemp))=7 or (select count(*) from Indisponibiliteplateau where dateindisponibilite=datetemp and Indisponibiliteplateau.idplateau=g.idplateau)=1 or (select count(*) from JourFerie where dateferie=datetemp)=1 loop
+			datetemp:=datetemp+1;
+		end loop;
 
+		dateplanning:=datetemp;
+		heureplanning:=g.temp;
+		scene:=g.id;
+
+	end loop;
     end;	
 $$;
 
