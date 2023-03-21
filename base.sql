@@ -167,7 +167,10 @@ create table Planning(
 	heureplanning time,
 	scene int
 );
-
+create table Horaire(
+	horaire time
+);
+insert into Horaire values('08:00:00');
 insert into  sentiment(sentiment) values('bonheur'), ('chagrin'), ('colère'), ('compassion'), ('crainte'),('dégoût'),('désespoir'), ('effroi'), ('ennui'),('envie'),('frayeur'), ('fureur'), ('gaieté'), ('haine'), ('honte'), ('jalousie'),('joie'), ('mélancolie'), ('mépris'), ('panique'), ('peine'), ('peur'), ('rage'), ('respect'), ('stupeur'), ('surprise'), ('terreur'), ('tristesse');
 
 insert into expression(expression) values('sourire');
@@ -184,7 +187,7 @@ CREATE VIEW SceneTournage as  select scene.*,coalesce(sum(durree),'00:00:00') as
 --jour ferie 
 -- weekend non pris en compte:  EXTRACT(ISODOW FROM (datedebut+countjour))
 
---8 heurre
+--8 heure
 create or replace function planning(film int,datedebut date,datefin date)
 returns table(
 	dateplanning date,
