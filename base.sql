@@ -222,7 +222,6 @@ $$
 			datetemp:=datetemp+1;
 		end loop;
 		if g.temps>'00:00:00' then
-		RAISE NOTICE 'Voloany: %-%: %',horaire,g.temps,(horaire-g.temps);
 			if (horaire-g.temps)>='00:00:00' and (horaire-g.temps)<='08:00:00' then
 				dateplanning:=datetemp;
 				heureplanning:=timedebut;
