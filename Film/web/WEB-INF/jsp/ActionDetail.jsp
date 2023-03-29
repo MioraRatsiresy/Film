@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% model.Scene scene = (model.Scene) request.getAttribute("scene"); %>
+<%--<% model.Scene scene = (model.Scene) request.getAttribute("scene"); %>--%>
 <!--[if IE 7]>
 <html class="ie ie7 no-js" lang="en-US">
 <![endif]-->

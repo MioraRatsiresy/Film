@@ -313,9 +313,9 @@
                 %>
                 <div class="movie-item">
                     <div class="mv-img">
-                        <a href="#"><img
-                                src="../../${pageContext.request.contextPath}/resources/images/uploads/slider1.jpg"
-                                alt="" width="285" height="437"></a>
+                        <a href="#"><img class="poster"
+                                src="../../${pageContext.request.contextPath}/resources/images/uploads/<%= f.getSary() %>"
+                                alt="" width="285" ></a>
                     </div>
                     <div class="title-in">
                         <div class="cate">
