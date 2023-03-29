@@ -8308,3 +8308,8 @@ footer.full-width-ft .ft-copyright {
   /* Add a fixed height to the modal */
   overflow-y: auto;
 }
+
+.poster {
+  height: 390px;
+
+}
