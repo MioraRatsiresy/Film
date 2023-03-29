@@ -67,6 +67,9 @@ public class FilmController {
         }*/
         SceneView scene = new SceneView();
         scene.setIdfilm(idfilm);
+        if(request.getParameter("filtre")!=null){
+            scene.setEtatscene(Integer.parseInt(request.getParameter("filtre")));
+        }
         int npp = 4;
         int numpage = 1;
         if (request.getParameter("numpage") != null) {
@@ -74,8 +77,9 @@ public class FilmController {
         }
         int indiceprime = numpage * npp - npp;
         model.addAttribute("scene", dao.paginateWhere(scene, indiceprime, npp));
+        model.addAttribute("film", dao.findById(Film.class, idfilm));
         model.addAttribute("numpage", numpage);
-        return "index";
+        return "Detail";
     }
 
     @RequestMapping("/insertFilm")

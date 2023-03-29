@@ -92,5 +92,12 @@ public class SceneView {
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
+     private Integer etatscene;
+    public void setEtatscene(Integer etatscene){
+        this.etatscene=etatscene;
+    }
+    public Integer getEtatscene(){
+        return etatscene;
+    }
 
 }
