@@ -9,10 +9,8 @@ import dao.HibernateDao;
 import java.io.File;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import model.Film;
-import model.Plateau;
-import model.Scene;
-import model.SceneView;
+
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,8 +58,10 @@ public class FilmController {
     }
 
     @GetMapping("/planning/{idfilm}")
-    public String planning(@PathVariable int idfilm,Model model){
+    public String planning(@PathVariable int idfilm,Model model, @RequestParam String d1, @RequestParam String d2){
+        System.out.println("zfzefe");
         model.addAttribute("film", dao.findById(Film.class, idfilm));
+        model.addAttribute("dates", dao.findAll(Planning.class));
         return "Programme";
     }
 

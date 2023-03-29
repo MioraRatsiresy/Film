@@ -7,7 +7,7 @@
 <!--[if IE 8]>
 <html class="ie ie8 no-js" lang="en-US">
 <![endif]-->
-<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<!--[if !(IE 7) | !(IE 8) ]><!-->
 <html lang="en" class="no-js">
 
 <!-- index14:58-->
@@ -34,7 +34,8 @@
 <body>
 <!--preloading-->
 <div id="preloader">
-    <img class="logo" src="${pageContext.request.contextPath}/resources/images/logo1.png" alt="" width="119" height="58">
+    <img class="logo" src="${pageContext.request.contextPath}/resources/images/logo1.png" alt="" width="119"
+         height="58">
     <div id="status">
         <span></span>
         <span></span>
@@ -145,7 +146,9 @@
                         <span></span>
                     </div>
                 </div>
-                <a href="index-2.html"><img class="logo" src="${pageContext.request.contextPath}/resources/images/logo1.png" alt="" width="119" height="58"></a>
+                <a href="index-2.html"><img class="logo"
+                                            src="${pageContext.request.contextPath}/resources/images/logo1.png" alt=""
+                                            width="119" height="58"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
@@ -263,28 +266,36 @@
         <div class="row ipad-width2">
             <div class="col-md-4 col-sm-12 col-xs-12">
                 <div class="movie-img sticky-sb">
-                    <img src="${pageContext.request.contextPath}/resources/images/uploads/<%= ((model.Film) (request.getAttribute("film"))).getSary() %>" alt="">
+                    <img src="${pageContext.request.contextPath}/resources/images/uploads/<%= ((model.Film) (request.getAttribute("film"))).getSary() %>"
+                         alt="">
                 </div>
             </div>
             <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="movie-single-ct main-content">
-                    <h1 class="bd-hd"><%= ( (model.Film) (request.getAttribute("film"))).getTitre() %></h1>
+                    <h1 class="bd-hd">Planning <%= ((model.Film) (request.getAttribute("film"))).getTitre() %>
+                    </h1>
+                    <h1 class="bd-hd">Du <%= request.getParameter("d1") %> au  <%= request.getParameter("d2") %>
+                    </h1>
                     <div class="movie-tabs">
                         <div class="tabs">
                             <div class="tab-content">
                                 <div id="overview" class="tab active">
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div class="title-hd-sm">
-                                                <h4>Jour 1</h4>
-                                            </div>
+
                                             <!-- movie cast -->
+                                                <div class="title-hd-sm">
+                                                    <h4>24 Mars 2023</h4>
+                                                    <h4>Plateau 1 (Analakely)</h4>
+                                                </div>
                                             <div class="mvcast-item">
                                                 <div class="cast-it">
                                                     <div class="cast-left">
                                                         <a>Scene 1</a>
                                                         <p>Rencontre</p>
                                                         <p>03:49:23</p>
+                                                        <button type="button" onclick="moveSceneUp(this.parentNode.parentNode)">▲</button>
+                                                        <button type="button" onclick="moveSceneDown(this.parentNode.parentNode)">▼</button>
                                                     </div>
                                                     <a href="ActionDetail.html">Actions</a>
                                                 </div>
@@ -293,52 +304,8 @@
                                                         <a>Scene 3</a>
                                                         <p>A la bibliothèque</p>
                                                         <p>03:49:23</p>
-                                                    </div>
-                                                    <a href="ActionDetail.html">Actions</a>
-                                                </div>
-                                                <div class="title-hd-sm">
-                                                    <h4>Jour 2</h4>
-                                                </div>
-                                                <div class="cast-it">
-                                                    <div class="cast-left">
-                                                        <a>Scene 2</a>
-                                                        <p>Au marché</p>
-                                                        <p>03:49:23</p>
-                                                    </div>
-                                                    <a href="ActionDetail.html">Actions</a>
-                                                </div>
-                                                <div class="cast-it">
-                                                    <div class="cast-left">
-                                                        <a>Scene 4</a>
-                                                        <p>Dans le taxi</p>
-                                                        <p>03:49:23</p>
-                                                    </div>
-                                                    <a href="ActionDetail.html">Actions</a>
-                                                </div>
-                                                <div class="cast-it">
-                                                    <div class="cast-left">
-                                                        <a>Scene 5</a>
-                                                        <p>En cours</p>
-                                                        <p>03:49:23</p>
-                                                    </div>
-                                                    <a href="ActionDetail.html">Actions</a>
-                                                </div>
-                                                <div class="title-hd-sm">
-                                                    <h4>Jour 3</h4>
-                                                </div>
-                                                <div class="cast-it">
-                                                    <div class="cast-left">
-                                                        <a>Scene 7</a>
-                                                        <p>Fête forraine</p>
-                                                        <p>03:49:23</p>
-                                                    </div>
-                                                    <a href="ActionDetail.html">Actions</a>
-                                                </div>
-                                                <div class="cast-it">
-                                                    <div class="cast-left">
-                                                        <a>Scene 6</a>
-                                                        <p>Église</p>
-                                                        <p>03:49:23</p>
+                                                        <button type="button" onclick="moveSceneUp(this.parentNode.parentNode)">▲</button>
+                                                        <button type="button" onclick="moveSceneDown(this.parentNode.parentNode)">▼</button>
                                                     </div>
                                                     <a href="ActionDetail.html">Actions</a>
                                                 </div>
@@ -359,7 +326,8 @@
     <div class="container">
         <div class="flex-parent-ft">
             <div class="flex-child-ft item1">
-                <a href="index-2.html"><img class="logo" src="${pageContext.request.contextPath}/resources/images/logo1.png" alt=""></a>
+                <a href="index-2.html"><img class="logo"
+                                            src="${pageContext.request.contextPath}/resources/images/logo1.png" alt=""></a>
                 <p>5th Avenue st, manhattan<br>
                     New York, NY 10001</p>
                 <p>Call us: <a href="#">(+01) 202 342 6789</a></p>
@@ -417,6 +385,23 @@
 <script src="${pageContext.request.contextPath}/resources/js/plugins.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plugins2.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
+<script>
+    function moveSceneUp(sceneItem) {
+        // Check if this is not already at the top
+        if (sceneItem.previousElementSibling != null) {
+            // Move this element before its previous sibling
+            sceneItem.parentNode.insertBefore(sceneItem, sceneItem.previousElementSibling);
+        }
+    }
+
+    function moveSceneDown(sceneItem) {
+        // Check if this is not already at bottom
+        if (sceneItem.nextElementSibling != null) {
+            // Move the next sibling before current element
+            sceneItem.parentNode.insertBefore(sceneItem.nextElementSibling, sceneitem);
+        }
+    }
+</script>
 </body>
 
 <!-- index14:58-->

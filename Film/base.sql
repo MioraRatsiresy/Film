@@ -27,7 +27,6 @@ create table Film(
 	descriptionfilm text		
 );
 
-INSERT INTO Film values(default,'Bobby','photo.png','kaka');
 
 create table Administrateur(
 	id serial primary key,
@@ -358,15 +357,28 @@ $$;
 
 select * from planning(1,'2023-03-22','2023-03-24');
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+CREATE TABLE planning
+(
+    id           serial PRIMARY KEY,
+    idFilm       int references Film,
+    datePlanning date
+
+);
+
+insert into film (id, titre, sary, descriptionfilm)
+values  (1, 'Parasite', 'parasite.jpg', 'Film '),
+        (2, 'La La Land', 'LaLaLand.webp', 'Film '),
+        (4, 'Us', 'us.jpg', 'Film '),
+        (5, 'Endgame', 'endgame.webp', 'Film ');
+
+
+insert into planning (id, idfilm, dateplanning)
+values  (1, 1, '2023-03-24'),
+        (2, 1, '2023-03-27'),
+        (3, 1, '2023-03-28'),
+        (4, 1, '2023-03-30'),
+        (5, 1, '2023-03-31');
 	
 	
 	
