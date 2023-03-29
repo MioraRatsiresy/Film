@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!--[if IE 7]>
 <html class="ie ie7 no-js" lang="en-US">
 <![endif]-->
@@ -12,7 +13,7 @@
 <!-- index14:58-->
 <head>
     <!-- Basic need -->
-    <title>Liste des films</title>
+    <title>Programme</title>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -26,14 +27,15 @@
     <meta name="format-detection" content="telephone-no">
 
     <!-- CSS files -->
-    <link rel="stylesheet" href="../../resources/css/plugins.css">
-    <link rel="stylesheet" href="../../resources/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plugins.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 
 </head>
 <body>
 <!--preloading-->
 <div id="preloader">
-    <img class="logo" src="../../resources/images/logo1.png" alt="" width="119" height="58">
+    <img class="logo" src="${pageContext.request.contextPath}/resources/images/logo1.png" alt="" width="119"
+         height="58">
     <div id="status">
         <span></span>
         <span></span>
@@ -129,40 +131,6 @@
     </div>
 </div>
 <!--end of signup form popup-->
-<!--add form popup-->
-<div class="login-wrapper" id="add-content">
-    <div class="login-content">
-        <a href="#" class="close">x</a>
-        <h3>Ajouter une Scène</h3>
-        <form method="post" action="#">
-            <div class="row">
-                <label for="password-2">
-                    nom:
-                    <input type="text" name="nom" id="nom" placeholder=""
-                           required="required"/>
-                </label>
-            </div>
-            <div class="row">
-                <label for="password-2">
-                    plateau:
-                    <input type="text" name="plateau" id="plateau" placeholder=""
-                           required="required"/>
-                </label>
-            </div>
-            <div class="row">
-                <label for="description">
-                    Description:
-                    <textarea name="description" id="description" cols="30" rows="10"></textarea>
-                </label>
-            </div>
-            <div class="row">
-                <button type="submit">Ajouter</button>
-            </div>
-        </form>
-    </div>
-</div>
-<!--end of add form popup-->
-
 
 <!-- BEGIN | Header -->
 <header class="ht-header">
@@ -178,8 +146,9 @@
                         <span></span>
                     </div>
                 </div>
-                <a href="index-2.html"><img class="logo" src="../../resources/images/logo1.png" alt="" width="119"
-                                            height="58"></a>
+                <a href="index-2.html"><img class="logo"
+                                            src="${pageContext.request.contextPath}/resources/images/logo1.png" alt=""
+                                            width="119" height="58"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
@@ -297,50 +266,40 @@
         <div class="row ipad-width2">
             <div class="col-md-4 col-sm-12 col-xs-12">
                 <div class="movie-img sticky-sb">
-                    <img src="../../resources/images/uploads/<%= ((model.Film) (request.getAttribute("film"))).getSary() %>" alt="">
+                    <img src="${pageContext.request.contextPath}/resources/images/uploads/<%= ((model.Film) (request.getAttribute("film"))).getSary() %>"
+                         alt="">
                 </div>
             </div>
             <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="movie-single-ct main-content">
                     <h1 class="bd-hd"><%= ((model.Film) (request.getAttribute("film"))).getTitre() %>
                     </h1>
-                    <center>
-                        <button class="btn"><a href="${pageContext.request.contextPath}/planning/date/<%= ((model.Film) (request.getAttribute("film"))).getId() %>">Voir le planning</a></button>
-                        <button class="btn addLink"><a href="#">Ajouter une Scène</a></button>
-                    </center>
-                    <div class="movie-tabs">
-                        <div class="tabs">
-                            <div class="tab-content">
-                                <div id="overview" class="tab active">
-                                    <div class="row">
-                                        <div class="col-md-8 col-sm-12 col-xs-12">
-                                            <div class="title-hd-sm">
-                                                <h4>Scène</h4>
-                                            </div>
-                                            <!-- movie cast -->
-                                            <div class="mvcast-item">
-                                                <% int i = 0;
-                                                    for (Object fObj :
-                                                        (List) request.getAttribute("scene")) {
-                                                    model.Scene s = (model.Scene) fObj;
-                                                        i++;
-                                                %>
-                                                <div class="cast-it">
-                                                    <div class="cast-left">
-                                                        <a>Scène <%= i %></a>
-                                                        <p><%= s.getDescriptionscene() %></p>
-                                                    </div>
-                                                    <a href="${pageContext.request.contextPath}/actionDetail/<%= s.getIdfilm() %>/<%= s.getId() %>">Actions</a>
-                                                </div>
-
-                                                <% } %>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <form method="get"  action="${pageContext.request.contextPath}/planning/<%= ((model.Film) (request.getAttribute("film"))).getId() %>">
+                        <div class="row">
+                            <label style="color: white">
+                                Date 1:
+                                <input type="datetime-local" name="d1" required="required"/>
+                            </label>
                         </div>
-                    </div>
+
+                        <div class="row">
+                            <label style="color: white">
+                                Date 2:
+                                <input type="datetime-local" name="d2" required="required"/>
+                            </label>
+                        </div>
+                        <br>
+                        <hr>
+                        <br>
+                        <div class="row">
+                            <button type="submit" style="
+                             background-color: #dd003f;
+                            color: #ffffff;
+                            padding: 11px 25px;
+                            border-radius: 20px;">Valider
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -351,7 +310,8 @@
     <div class="container">
         <div class="flex-parent-ft">
             <div class="flex-child-ft item1">
-                <a href="index-2.html"><img class="logo" src="../../resources/images/logo1.png" alt=""></a>
+                <a href="index-2.html"><img class="logo"
+                                            src="${pageContext.request.contextPath}/resources/images/logo1.png" alt=""></a>
                 <p>5th Avenue st, manhattan<br>
                     New York, NY 10001</p>
                 <p>Call us: <a href="#">(+01) 202 342 6789</a></p>
@@ -405,10 +365,10 @@
 </footer>
 <!-- end of footer section-->
 
-<script src="../../resources/js/jquery.js"></script>
-<script src="../../resources/js/plugins.js"></script>
-<script src="../../resources/js/plugins2.js"></script>
-<script src="../../resources/js/custom.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plugins.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plugins2.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
 </body>
 
 <!-- index14:58-->

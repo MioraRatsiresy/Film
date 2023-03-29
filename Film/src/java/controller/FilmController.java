@@ -65,6 +65,12 @@ public class FilmController {
         return "Programme";
     }
 
+    @GetMapping("/planning/date/{idfilm}")
+    public String datePlanning(@PathVariable int idfilm, Model model){
+        model.addAttribute("film", dao.findById(Film.class, idfilm));
+        return "dateProgramme";
+    }
+
     @GetMapping("/actionDetail/{idfilm}/{idScene}")
     public String actionDetail(@PathVariable int idfilm,@PathVariable int idScene,Model model){
         Scene scene = new Scene();
